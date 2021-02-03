@@ -3,4 +3,5 @@
     <string name="btn_home">Entrées</string>
     <string name="Button_middle">Plats</string>
     <string name="Button_bottom">Desserts</string>
+    <string name="return_btn">Retour</string>
 </resources>
