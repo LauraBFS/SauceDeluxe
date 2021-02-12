@@ -7,35 +7,35 @@
     tools:context=".HomeActivity">
 
     <Button
-        android:id="@+id/btn_home"
+        android:id="@+id/entreesBtn"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="270dp"
-        android:text="@string/btn_home"
+        android:text="@string/entreesBtn"
         android:textColorLink="#F3DE29"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/platsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/Button_middle"
+        android:text="@string/platsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_home" />
+        app:layout_constraintTop_toBottomOf="@+id/entreesBtn" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/dessertsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/Button_bottom"
+        android:text="@string/dessertsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/platsBtn" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_home"
+        app:layout_constraintTop_toBottomOf="@+id/entreesBtn"
         app:layout_constraintVertical_bias="0.434" />
 
     <ImageView
