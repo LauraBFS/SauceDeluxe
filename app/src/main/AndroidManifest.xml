@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SauceDeluxe">
-        <activity android:name=".panier.PanierActivity"></activity>
         <activity android:name=".categorie.DetailActivity" />
         <activity android:name=".categorie.CategorieActivity" />
         <activity android:name=".HomeActivity">
