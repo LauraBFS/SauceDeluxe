@@ -22,31 +22,19 @@ class HomeActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_home)
 
         binding.entreesBtn.setOnClickListener {
-            startCategoryActivity(ItemType.ENTREE)
+            startCategorieActivity(ItemType.ENTREE)
         }
 
         binding.platsBtn.setOnClickListener {
-            startCategoryActivity(ItemType.PLAT)
+            startCategorieActivity(ItemType.PLAT)
         }
 
         binding.dessertsBtn.setOnClickListener {
-            startCategoryActivity(ItemType.DESSERT)
+            startCategorieActivity(ItemType.DESSERT)
         }
-
-        /*
-            //initialisation du bouton
-            boutonEntrees = findViewById(R.id.btn_home) //button des entrees
-
-            // creation de notre intent
-            val monIntent : Intent =  Intent(this, CategorieActivity::class.java)
-
-            //clic sur le bouton
-            boutonEntrees.setOnClickListener {
-                startActivity(monIntent)
-            }*/
     }
 
-    private fun startCategoryActivity(item: ItemType) {
+    private fun startCategorieActivity(item: ItemType) {
         val intent = Intent(this, CategorieActivity::class.java)
         intent.putExtra(CATEGORY_NAME, item)
         startActivity(intent)

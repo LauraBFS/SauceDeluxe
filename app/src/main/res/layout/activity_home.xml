@@ -39,8 +39,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="290dp"
         android:layout_marginTop="145dp"
         android:src="@drawable/ilustracao_de_maos_segurando_comida_lixo_53876_37283"
         app:layout_constraintBottom_toBottomOf="parent"

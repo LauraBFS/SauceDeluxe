@@ -40,7 +40,7 @@ class CategorieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindind = ActivityCategorieBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_categorie)
+        setContentView(bindind.root)
 
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
 
@@ -68,7 +68,5 @@ class CategorieActivity : AppCompatActivity() {
             else -> ""
         }
     }
-
-
 
 }
