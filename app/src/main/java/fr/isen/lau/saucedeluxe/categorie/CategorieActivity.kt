@@ -35,6 +35,7 @@ class CategorieActivity : AppCompatActivity() {
 
     //Declaration de mon bouton
     lateinit var Retour : Button
+
     private lateinit var bindind: ActivityCategorieBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,7 @@ class CategorieActivity : AppCompatActivity() {
         //initialisation
         Retour = findViewById(R.id.return_btn)
 
-        // creation de notre intent
+        // creation de l'intent
         val monIntentRetour : Intent =  Intent(this,HomeActivity::class.java)
 
         //clic sur le bouton
@@ -68,20 +69,20 @@ class CategorieActivity : AppCompatActivity() {
             else -> ""
         }
     }
-
+/*
     override fun onResume() {
         super.onResume()
-        Log.d("Tag", "onResume est lancé")
+        Log.d("Tag", "onResume")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d("Tag", "onRestart est lancé")
+        Log.d("Tag", "onRestart")
     }
 
     override fun onDestroy() {
-        Log.d("Tag", "onDestroy est lancé")
+        Log.d("Tag", "onDestroy")
         super.onDestroy()
-    }
+    }*/
 
 }
