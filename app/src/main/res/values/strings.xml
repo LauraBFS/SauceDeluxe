@@ -8,4 +8,5 @@
     <string name="platsBtn">Plats</string>
     <string name="entreesBtn">Entrées</string>
     <string name="categorie_title">test</string>
+    <string name="toast">Un Toast ?</string>
 </resources>

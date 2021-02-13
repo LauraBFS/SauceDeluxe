@@ -69,4 +69,19 @@ class CategorieActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("Tag", "onResume est lancé")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("Tag", "onRestart est lancé")
+    }
+
+    override fun onDestroy() {
+        Log.d("Tag", "onDestroy est lancé")
+        super.onDestroy()
+    }
+
 }

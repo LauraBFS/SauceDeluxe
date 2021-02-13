@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import fr.isen.lau.saucedeluxe.categorie.CategorieActivity
 import fr.isen.lau.saucedeluxe.categorie.ItemType
 import fr.isen.lau.saucedeluxe.databinding.ActivityHomeBinding
@@ -31,6 +32,10 @@ class HomeActivity : AppCompatActivity() {
 
         binding.dessertsBtn.setOnClickListener {
             startCategorieActivity(ItemType.DESSERT)
+        }
+
+        binding.ToastBtn.setOnClickListener {
+            Toast.makeText(this, "Toast Saumon/Avocat", Toast.LENGTH_SHORT).show()
         }
     }
 
