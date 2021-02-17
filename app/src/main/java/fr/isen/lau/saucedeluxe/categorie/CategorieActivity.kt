@@ -2,7 +2,6 @@ package fr.isen.lau.saucedeluxe.categorie
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
@@ -19,6 +17,7 @@ import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
 import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
 
 
 enum class ItemType {
@@ -44,7 +43,8 @@ class CategorieActivity : AppCompatActivity() {
     private var dividerItemDecoration: DividerItemDecoration? = null
     private var itemsList: List<Items>? = null
     private var adapter: RecyclerView.Adapter<*>? = null
-    private val url = "http://test.api.catering.bluecodegames.com/"
+    private var url = "http://test.api.catering.bluecodegames.com/"
+
 
     //Declaration de mon bouton
     lateinit var Retour : Button
@@ -119,16 +119,20 @@ private fun getDataItems() {
     val progressDialog = ProgressDialog(this)
     progressDialog.setMessage("Je cherche tes plats la ça se voit pas ?")
     progressDialog.show()
+
+    var jsonItems = JSONObject()
+
     val jsonArrayRequest = JsonArrayRequest(url, {
         fun onResponse(response: JSONArray) {
             for (i in 0 until response.length()) {
                 try {
-                    val jsonObject = response.getJSONObject(i)
+                    //val jsonObject = response.getJSONObject(i)
+                    jsonItems = jsonItems.put("id_shop", "1")
 
                     val item = Items()
-                    item.titleItem(jsonObject.getString("titleItem"))
-                    item.pictureItem(jsonObject.getInt("PictureItem"))
-                    item.priceItem(jsonObject.getString("priceItem"))
+                    item.titleItem(jsonItems.getString("titleItem"))
+                    item.pictureItem(jsonItems.getInt("PictureItem"))
+                    item.priceItem(jsonItems.getString("priceItem"))
 
                     //itemsList.add(item)
                 } catch (e: JSONException) {
@@ -148,7 +152,6 @@ private fun getDataItems() {
     val requestQueue = Volley.newRequestQueue(this)
     requestQueue.add(jsonArrayRequest)
 }
-
 }
 
 
