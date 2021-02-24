@@ -1,58 +1,41 @@
 package fr.isen.lau.saucedeluxe.categorie
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.lau.saucedeluxe.R
-import java.lang.String
+import fr.isen.lau.saucedeluxe.databinding.CategoriePlacementBinding
 
 
-class CategorieAdapter(context: Context, list: List<Items>) :
+class CategorieAdapter(private val list: List<String>, private val clickListener: onItemClickListener) : RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
 
-    RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
-
-    private val context: Context
-    private val list: List<Items>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(context).inflate(R.layout.categorieplacement, parent, false)
-        return ViewHolder(v)
+        val binding = CategoriePlacementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val items = list[position]
-        /*
+        holder.textTitle.text = list[position]
+        //holder.textPicture.picasso faudra utiliser la lib picasso
+        //holder.textPrice.text = item.priceItem
+
         holder.layout.setOnClickListener {
-            entryClickListener.invoke(items)
-        }
-        holder.bind(items)
-
-        holder.textPicture.setText(Items.pictureItem())
-        holder.textTitle.setText(String.valueOf(Items.titleItem()))
-        holder.textPrice.setText(String.valueOf(Items.priceItem()))*/
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var textTitle: TextView
-        var textPicture: ImageView
-        var textPrice: TextView
-
-        init {
-            textTitle = itemView.findViewById(R.id.CategorieName)
-            textPicture = itemView.findViewById(R.id.CatagoriesImage)
-            textPrice = itemView.findViewById(R.id.CategoriePrice)
+            clickListener.onItemClick(list[position])
         }
     }
 
-    init {
-        this.context = context
-        this.list = list
+    override fun getItemCount(): Int = list.size
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textTitle: TextView = itemView.findViewById(R.id.categorieName)
+        val textPrice: TextView = itemView.findViewById(R.id.categoriePrice)
+        //val textPicture: ImageView = itemView.findViewById(R.id.CatagoriesImage)
+        val layout = itemView.findViewById<View>(R.id.cellLayout)
+    }
+
+    interface onItemClickListener {
+        fun onItemClick(item: String)
     }
 }

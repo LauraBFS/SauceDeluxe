@@ -3,20 +3,19 @@ package fr.isen.lau.saucedeluxe.categorie
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonArrayRequest
+
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+
 import fr.isen.lau.saucedeluxe.HomeActivity
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
-import org.json.JSONArray
-import org.json.JSONException
+
 import org.json.JSONObject
 
 
@@ -35,62 +34,32 @@ enum class ItemType {
     }
 }
 
+class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListener {
 
-class CategorieActivity : AppCompatActivity() {
+    private var url = "http://test.api.catering.bluecodegames.com/menu"
 
-    lateinit var mList: RecyclerView
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private var dividerItemDecoration: DividerItemDecoration? = null
-    private var itemsList: List<Items>? = null
-    private var adapter: RecyclerView.Adapter<*>? = null
-    private var url = "http://test.api.catering.bluecodegames.com/"
-
-
-    //Declaration de mon bouton
-    lateinit var Retour : Button
-
-    private lateinit var bindind: ActivityCategorieBinding
+    private lateinit var binding: ActivityCategorieBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        bindind = ActivityCategorieBinding.inflate(layoutInflater)
-        setContentView(bindind.root)
+        binding = ActivityCategorieBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
+        binding.categorieTitle.text = getCategorieTitle(selectedItem)
 
-        //initialisation
-        Retour = findViewById(R.id.return_btn)
+        binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewCategorie.adapter = CategorieAdapter(listOf("burger", "Fries", "Pasta", "Pizza", "Tomatoes", "Boeuf bourgigi", "raclette", "tartfiflette"), this)
 
-        // creation de l'intent
-        val monIntentRetour : Intent =  Intent(this, HomeActivity::class.java)
-
-        //clic sur le bouton
-        Retour.setOnClickListener {
-            startActivity(monIntentRetour)
-        }
-
-        val actionBar = supportActionBar
-        actionBar!!.title = "Choix du roi"
-        bindind.categorieTitle.text = getCategorieTitle(selectedItem)
-
-        mList = findViewById(R.id.recyclerView)
-        itemsList = ArrayList()
-        adapter = CategorieAdapter(applicationContext, itemsList as ArrayList<Items>)
-        linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager!!.orientation = LinearLayoutManager.VERTICAL
-
-        dividerItemDecoration = DividerItemDecoration(
-            mList.context,
-            linearLayoutManager!!.orientation
-        )
-        mList.setHasFixedSize(true)
-        mList.layoutManager = linearLayoutManager
-        mList.addItemDecoration(dividerItemDecoration!!)
-        mList.adapter = adapter
-
-        getDataItems();
+        //getDataItems();
     }
 
+    override fun onItemClick(item: String) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("items", item)
+        startActivity(intent)
+    }
     private fun getCategorieTitle(item: ItemType?): String {
         return when(item) {
             ItemType.ENTREE -> "Entrees"
@@ -99,59 +68,30 @@ class CategorieActivity : AppCompatActivity() {
             else -> ""
         }
     }
-/*
-    override fun onResume() {
-        super.onResume()
-        Log.d("Tag", "onResume")
-    }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("Tag", "onRestart")
-    }
+    private fun getDataItems() {
 
-    override fun onDestroy() {
-        Log.d("Tag", "onDestroy")
-        super.onDestroy()
-    }*/
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Je cherche tes plats la ça se voit pas ?")
+        progressDialog.show()
 
-private fun getDataItems() {
-    val progressDialog = ProgressDialog(this)
-    progressDialog.setMessage("Je cherche tes plats la ça se voit pas ?")
-    progressDialog.show()
+        // Initialize a new RequestQueue instance
+        val jsonData = JSONObject().put("id_shop", "1")
 
-    var jsonItems = JSONObject()
-
-    val jsonArrayRequest = JsonArrayRequest(url, {
-        fun onResponse(response: JSONArray) {
-            for (i in 0 until response.length()) {
-                try {
-                    //val jsonObject = response.getJSONObject(i)
-                    jsonItems = jsonItems.put("id_shop", "1")
-
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, jsonData,
+                {
                     val item = Items()
-                    item.titleItem(jsonItems.getString("titleItem"))
-                    item.pictureItem(jsonItems.getInt("PictureItem"))
-                    item.priceItem(jsonItems.getString("priceItem"))
-
-                    //itemsList.add(item)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+                    item.titleItem(it.getString("titleItem"))
+                    //item.pictureItem(it.getInt("PictureItem"))
+                    item.priceItem(it.getString("priceItem"))
+                },
+                { error ->
+                    error.printStackTrace()
                     progressDialog.dismiss()
                 }
-            }
-            adapter!!.notifyDataSetChanged()
-            progressDialog.dismiss()
-        }
-    }, {
-        fun onErrorResponse(error: VolleyError) {
-            Log.e("Volley", error.toString())
-            progressDialog.dismiss()
-        }
-    })
-    val requestQueue = Volley.newRequestQueue(this)
-    requestQueue.add(jsonArrayRequest)
-}
-}
+        )
+            val requestQueue = Volley.newRequestQueue(this)
+            requestQueue.add(jsonObjectRequest)
+    }
 
-
+}

@@ -1,6 +1,8 @@
 package fr.isen.lau.saucedeluxe.categorie
 
-class Items {
+import java.io.Serializable
+
+class Items : Serializable {
     fun titleItem(string: String) {
         TODO("Not yet implemented")
     }

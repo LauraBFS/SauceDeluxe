@@ -34,9 +34,6 @@ class HomeActivity : AppCompatActivity() {
             startCategorieActivity(ItemType.DESSERT)
         }
 
-        binding.ToastBtn.setOnClickListener {
-            Toast.makeText(this, "Toast Saumon/Avocat", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun startCategorieActivity(item: ItemType) {
