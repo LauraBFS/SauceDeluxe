@@ -5,6 +5,4 @@ import java.io.Serializable
 data class Order(
         @SerializedName("item") var item: Item,
         @SerializedName("quantity") var quantity: Int,
-) : Serializable {
-    fun totalPriceFormatted() = (quantity * item.getPrice()).toString() + "€"
-}
+) : Serializable

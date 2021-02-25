@@ -11,9 +11,6 @@ import fr.isen.lau.saucedeluxe.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    //Declaration de mes boutons
-    //lateinit var boutonEntrees : Button
-
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_home)
 
         binding.entreesBtn.setOnClickListener {
-            startCategorieActivity(ItemType.ENTREE)
+            startCategorieActivity(ItemType.ENTREES)
         }
 
         binding.platsBtn.setOnClickListener {

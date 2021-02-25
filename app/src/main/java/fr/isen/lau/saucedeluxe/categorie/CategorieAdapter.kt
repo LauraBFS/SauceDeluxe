@@ -7,31 +7,41 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.CategoriePlacementBinding
+import fr.isen.lau.saucedeluxe.model.Item
+import com.squareup.picasso.Picasso
 
 
-class CategorieAdapter(private val list: List<String>, private val clickListener: onItemClickListener) : RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
+class CategorieAdapter(private val list: List<Item>,
+                       private val clickListener: (Item) -> Unit) : RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CategoriePlacementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textTitle.text = list[position]
-        //holder.textPicture.picasso faudra utiliser la lib picasso
-        //holder.textPrice.text = item.priceItem
+        holder.textTitle.text = list[position].name
+        holder.textPrice.text = list[position].getAffichagePrice()
+
+        if (list[position].getFirstPicture().isNullOrEmpty()) {
+            Picasso.get()
+                    .load("https://cdn.vox-cdn.com/thumbor/pyedsHD4n0a3uBGicl9o3e580l8=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/18341527/10010.jpeg").into(holder.textPicture)
+        } else {
+            Picasso.get()
+                    .load(list[position].getFirstPicture()).into(holder.textPicture)
+        }
 
         holder.layout.setOnClickListener {
-            clickListener.onItemClick(list[position])
+            clickListener.invoke(list[position])
         }
     }
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(binding: CategoriePlacementBinding) : RecyclerView.ViewHolder(binding.root) {
         val textTitle: TextView = itemView.findViewById(R.id.categorieName)
         val textPrice: TextView = itemView.findViewById(R.id.categoriePrice)
-        //val textPicture: ImageView = itemView.findViewById(R.id.CatagoriesImage)
+        val textPicture = binding.catagoriesImage
         val layout = itemView.findViewById<View>(R.id.cellLayout)
     }
 

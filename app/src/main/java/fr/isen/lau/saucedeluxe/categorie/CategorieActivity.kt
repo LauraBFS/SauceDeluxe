@@ -5,12 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 
 import fr.isen.lau.saucedeluxe.HomeActivity
 import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
@@ -18,14 +20,15 @@ import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
 import org.json.JSONObject
 import com.google.gson.GsonBuilder
 import fr.isen.lau.saucedeluxe.model.DataResult
+import fr.isen.lau.saucedeluxe.model.Item
 
 enum class ItemType {
-    ENTREE, PLAT, DESSERT;
+    ENTREES, PLAT, DESSERT;
 
     companion object {
         fun categoryTitle(item: ItemType?) : String {
             return when(item) {
-                ENTREE -> "Entree"
+                ENTREES -> "Entrées"
                 PLAT -> "Plat"
                 DESSERT -> "Dessert"
                 else -> ""
@@ -37,7 +40,6 @@ enum class ItemType {
 class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListener {
 
     private lateinit var binding: ActivityCategorieBinding
-    private var category: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,7 +51,8 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
         binding.categorieTitle.text = getCategorieTitle(selectedItem)
 
         binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewCategorie.adapter = CategorieAdapter(listOf("burger", "Fries", "Pasta", "Pizza", "Tomatoes", "Boeuf bourgigi", "raclette", "tartfiflette"), this)
+        //binding.recyclerViewCategorie.adapter = CategorieAdapter
+        // (listOf("burger", "Fries", "Pasta", "Pizza", "Tomatoes", "Boeuf bourgigi", "raclette", "tartfiflette"))
 
         getDataItems(getCategorieTitle(selectedItem));
     }
@@ -60,40 +63,22 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
         startActivity(intent)
     }
 
-    private fun getCategorieTitle(item: ItemType?): String {
-        return when (item) {
-            ItemType.ENTREE -> "Entrees"
-            ItemType.PLAT -> "Plats"
-            ItemType.DESSERT -> "Desserts"
-            else -> ""
-        }
-    }
-
     private fun getDataItems(category: String?) {
 
         val url = "http://test.api.catering.bluecodegames.com/menu"
         val requestQueue = Volley.newRequestQueue(this)
 
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Je cherche tes plats la ça se voit pas ?")
-        progressDialog.show()
-
-        // Initialize a new RequestQueue instance
+        // Initialisation de la RequestQueue instance
         val jsonData = JSONObject().put("id_shop", "1")
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, jsonData,
                 {it ->
                     Log.d("Json result", it.toString())
-                    val item = Items()
-                    item.titleItem(it.getString("titleItem"))
-                    //item.pictureItem(it.getInt("PictureItem"))
-                    item.priceItem(it.getString("priceItem"))
-
+                    //val dataList = Gson().fromJson(it["data"].toString(), Array<DataResult>::class.java)
                     parseResult(it.toString(), category)
                 },
                 { error ->
                     error.printStackTrace()
-                    progressDialog.dismiss()
                 }
         )
         requestQueue.add(jsonObjectRequest)
@@ -101,13 +86,11 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
 
     private fun parseResult(res: String, selectedItem: String?) {
         val menuResult = GsonBuilder().create().fromJson(res, DataResult::class.java)
-        val items = menuResult.data.firstOrNull {
-            it.name == selectedItem
-        }
+        val items = menuResult.data.firstOrNull { it.name == selectedItem }
         loadList(items?.items)
     }
 
-    private fun loadList(items: List<Items>?) {/*
+    private fun loadList(items: List<Item>?) {
         binding.categorieTitle.isVisible = false
 
         items?.let {
@@ -118,6 +101,15 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
             }
             binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
             binding.recyclerViewCategorie.adapter = adapter
-        }*/
+        }
+    }
+
+    private fun getCategorieTitle(item: ItemType?): String {
+        return when (item) {
+            ItemType.ENTREES -> "Entrées"
+            ItemType.PLAT -> "Plats"
+            ItemType.DESSERT -> "Desserts"
+            else -> ""
+        }
     }
 }
