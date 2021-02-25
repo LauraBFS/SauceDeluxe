@@ -1,18 +1,16 @@
 package fr.isen.lau.saucedeluxe.categorie
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import fr.isen.lau.saucedeluxe.R
-import kotlin.math.max
+import androidx.appcompat.app.AppCompatActivity
+import fr.isen.lau.saucedeluxe.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
-        Toast.makeText(this, intent.getStringExtra("items") ?: "", Toast.LENGTH_LONG).show()
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

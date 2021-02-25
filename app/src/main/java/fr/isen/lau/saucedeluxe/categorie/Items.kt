@@ -15,6 +15,14 @@ class Items : Serializable {
         TODO("Not yet implemented")
     }
 
+    val items: List<Items>?
+        get() {
+            TODO()
+        }
+    val name: Any
+        get() {
+            TODO()
+        }
     var titleItem: String? = null
     var pictureItem = 0
     var priceItem: String? = null
