@@ -69,7 +69,7 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
         val requestQueue = Volley.newRequestQueue(this)
 
         // Initialisation de la RequestQueue instance
-        val jsonData = JSONObject().put("id_shop", "1")
+        val jsonData = JSONObject().put("id_shop", 1)
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, jsonData,
                 {it ->
@@ -91,7 +91,6 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
     }
 
     private fun loadList(items: List<Item>?) {
-        binding.categorieTitle.isVisible = false
 
         items?.let {
             val adapter = CategorieAdapter(it) { item ->

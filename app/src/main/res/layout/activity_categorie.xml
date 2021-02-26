@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="monospace"
         android:text="@string/categorie_title"
         android:textColor="#4CAF50"
         android:textSize="30sp"
