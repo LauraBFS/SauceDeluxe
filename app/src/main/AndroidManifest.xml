@@ -8,12 +8,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SauceDeluxe">
-        <activity android:name=".categorie.DetailActivity" />
+        android:theme="@style/Theme.SauceDeluxe"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".categorie.DetailActivity"></activity>
         <activity android:name=".categorie.CategorieActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>

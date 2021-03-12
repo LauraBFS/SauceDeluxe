@@ -9,4 +9,7 @@
     <string name="entreesBtn">Entrées</string>
     <string name="categorie_title">test</string>
     <string name="toast">Un Toast ?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="counterDebut">0</string>
 </resources>

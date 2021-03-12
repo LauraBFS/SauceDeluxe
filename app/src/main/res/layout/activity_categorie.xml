@@ -8,14 +8,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCategorie"
-        android:layout_width="401dp"
-        android:layout_height="651dp"
+        android:layout_width="384dp"
+        android:layout_height="555dp"
         android:layout_marginTop="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/categorieTitle"
+        app:layout_constraintVertical_bias="0.02"
         tools:itemCount="8" />
 
     <TextView
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/didact_gothic"
         android:text="@string/categorie_title"
         android:textColor="#4CAF50"
         android:textSize="30sp"

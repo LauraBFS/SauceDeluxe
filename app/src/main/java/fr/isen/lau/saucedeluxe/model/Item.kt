@@ -9,10 +9,12 @@ data class Item(
         @SerializedName("ingredients") val ingredients: List<Ingredient>,
         @SerializedName("prices") private val prices: List<Price>,
 ) : Serializable {
+
     fun getAffichagePrice() = prices[0].price + "€"
     fun getFirstPicture() = if (images.isNotEmpty() && images[0].isNotEmpty()) {
         images[0]
     } else {
         null
     }
+    fun getIngredients(): String = ingredients.map(Ingredient::name).joinToString(", ")
 }

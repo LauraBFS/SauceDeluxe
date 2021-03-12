@@ -9,12 +9,14 @@ import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.model.Item
 import com.squareup.picasso.Picasso
 import fr.isen.lau.saucedeluxe.databinding.CategoriePlacementBinding
+import fr.isen.lau.saucedeluxe.model.Category
+import fr.isen.lau.saucedeluxe.model.DataResult
 
 class CategorieAdapter(private val list: List<Item>,
                        private val clickListener: (Item) -> Unit) : RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = fr.isen.lau.saucedeluxe.databinding.CategoriePlacementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = CategoriePlacementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -24,10 +26,12 @@ class CategorieAdapter(private val list: List<Item>,
 
         if (list[position].getFirstPicture().isNullOrEmpty()) {
             Picasso.get()
-                    .load("https://cdn.vox-cdn.com/thumbor/pyedsHD4n0a3uBGicl9o3e580l8=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/18341527/10010.jpeg").into(holder.Picture)
+                    .load("https://cdn.vox-cdn.com/thumbor/pyedsHD4n0a3uBGicl9o3e580l8=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/18341527/10010.jpeg")
+                    .into(holder.Picture)
         } else {
             Picasso.get()
-                    .load(list[position].getFirstPicture()).into(holder.Picture)
+                    .load(list[position].getFirstPicture())
+                    .into(holder.Picture)
         }
 
         holder.layout.setOnClickListener {
@@ -42,9 +46,5 @@ class CategorieAdapter(private val list: List<Item>,
         val textPrice: TextView = itemView.findViewById(R.id.categoriePrice)
         val Picture = binding.catagoriesImage
         val layout = itemView.findViewById<View>(R.id.cellLayout)
-    }
-
-    interface onItemClickListener {
-        fun onItemClick(item: String)
     }
 }

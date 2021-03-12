@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -19,6 +20,8 @@ import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
 
 import org.json.JSONObject
 import com.google.gson.GsonBuilder
+import fr.isen.lau.saucedeluxe.HomeActivity.Companion.CATEGORY_NAME
+import fr.isen.lau.saucedeluxe.model.Category
 import fr.isen.lau.saucedeluxe.model.DataResult
 import fr.isen.lau.saucedeluxe.model.Item
 
@@ -37,7 +40,7 @@ enum class ItemType {
     }
 }
 
-class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListener {
+class CategorieActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategorieBinding
 
@@ -51,17 +54,18 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
         binding.categorieTitle.text = getCategorieTitle(selectedItem)
 
         binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
-        //binding.recyclerViewCategorie.adapter = CategorieAdapter
-        // (listOf("burger", "Fries", "Pasta", "Pizza", "Tomatoes", "Boeuf bourgigi", "raclette", "tartfiflette"))
 
         getDataItems(getCategorieTitle(selectedItem));
     }
 
-    override fun onItemClick(item: String) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("items", item)
-        startActivity(intent)
-    }
+    /*private fun ItemDisplay(itemData: List<Item>) {
+        binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewCategorie.adapter = CategorieAdapter(itemData) {
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("items", it)
+            startActivity(intent)
+        }
+    }*/
 
     private fun getDataItems(category: String?) {
 
@@ -74,7 +78,6 @@ class CategorieActivity : AppCompatActivity(), CategorieAdapter.onItemClickListe
         val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, jsonData,
                 {it ->
                     Log.d("Json result", it.toString())
-                    //val dataList = Gson().fromJson(it["data"].toString(), Array<DataResult>::class.java)
                     parseResult(it.toString(), category)
                 },
                 { error ->
