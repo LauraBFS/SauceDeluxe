@@ -21,6 +21,7 @@ import android.bluetooth.le.ScanResult
 import android.os.Handler
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.isen.lau.saucedeluxe.model.Item
 
 class BleScanActivity : AppCompatActivity() {
 
@@ -33,7 +34,8 @@ class BleScanActivity : AppCompatActivity() {
 
     // Stops scanning after 10 seconds.
     private val SCAN_PERIOD: Long = 10000
-    private lateinit var leDeviceListAdapter: BLEScanAdapter
+    private var leDeviceListAdapter: BLEScanAdapter? = null
+    private var listBLE: MutableList<ScanResult>? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +80,8 @@ class BleScanActivity : AppCompatActivity() {
                 //youpi, on peut faire du BLE des alpes
                 Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
                 bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
-                initRecyclerDevice()
+                initRecyclerDevice(listBLE)
+
             }
         }
     }
@@ -103,9 +106,8 @@ class BleScanActivity : AppCompatActivity() {
 
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             super.onScanResult(callbackType, result)
-
-            leDeviceListAdapter.addDevice(result)
-            leDeviceListAdapter.notifyDataSetChanged()
+            leDeviceListAdapter?.addDevice(result)
+            leDeviceListAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -144,15 +146,24 @@ class BleScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecyclerDevice() {
-        leDeviceListAdapter = BLEScanAdapter(mutableListOf())
-        binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
-        binding.RecyclerBleScan.adapter = leDeviceListAdapter
-    }
+    private fun initRecyclerDevice(listBLE : MutableList<ScanResult>?) {
+        //leDeviceListAdapter = BLEScanAdapter(mutableListOf(), )
 
+        //pour remettre a 0, remmetre la 1ere ligne, elever les truc dessous faut les binding, et enleverles parametre de cette fonction
+        listBLE?.let {
+            val adapterBLE = BLEScanAdapter(it) { it ->
+                val intent = Intent(this, DetailBleActivity::class.java)
+                intent.putExtra("ListDevice", it)
+                startActivity(intent)
+            }
+            binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
+            binding.RecyclerBleScan.adapter = adapterBLE
+        }
+    }
 
     companion object {
         const val REQUEST_ENABLE_BT = 22
         const val REQUEST_PERMISSION_LOCATION = 22
+        private val SCAN_PERIOD: Long = 10000
     }
 }

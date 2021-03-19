@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".categorie.DetailBleActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="236dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="144dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/_901900ec6cd623e843598a78d23eefa_triple_cheeseburger_icon_by_vexels" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,9 +11,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.CellBleDeviceBinding
+import fr.isen.lau.saucedeluxe.model.Item
 
-class BLEScanAdapter(private val listBLE: MutableList<ScanResult>
-                      ) : RecyclerView.Adapter<BLEScanAdapter.ViewHolder>(){ //class bluethooth device a la place de dish
+class BLEScanAdapter(private val listBLE: MutableList<ScanResult>, private val clickListener: (ScanResult) -> Unit
+                      ) : RecyclerView.Adapter<BLEScanAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CellBleDeviceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,7 +27,7 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>
         holder.nameDevice.text = listBLE[position].scanRecord?.deviceName.toString()
 
         holder.layoutBLE.setOnClickListener {
-            //clickListener.invoke(listBLE[position])
+            clickListener.invoke(listBLE[position])
         }
     }
 
