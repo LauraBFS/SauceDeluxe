@@ -65,14 +65,16 @@
 
     <Button
         android:id="@+id/buttonBLEScan"
-        android:layout_width="49dp"
-        android:layout_height="31dp"
+        android:layout_width="46dp"
+        android:layout_height="33dp"
+        android:backgroundTint="#89C1D3"
         android:text="@string/BLEScan"
-        android:textSize="8sp"
+        android:textSize="7sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.664" />
+        app:layout_constraintVertical_bias="0.848" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
