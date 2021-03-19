@@ -13,7 +13,7 @@ import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.CellBleDeviceBinding
 import fr.isen.lau.saucedeluxe.model.Item
 
-class BLEScanAdapter(private val listBLE: MutableList<ScanResult>, private val clickListener: (ScanResult) -> Unit
+class BLEScanAdapter(private val listBLE: MutableList<ScanResult>/*, private val clickListener: (ScanResult) -> Unit*/
                       ) : RecyclerView.Adapter<BLEScanAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +27,7 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>, private val c
         holder.nameDevice.text = listBLE[position].scanRecord?.deviceName.toString()
 
         holder.layoutBLE.setOnClickListener {
-            clickListener.invoke(listBLE[position])
+            //clickListener.invoke(listBLE[position])
         }
     }
 

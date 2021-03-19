@@ -33,8 +33,8 @@ class BleScanActivity : AppCompatActivity() {
     private val handler = Handler()
 
     // Stops scanning after 10 seconds.
-    private val SCAN_PERIOD: Long = 10000
     private var leDeviceListAdapter: BLEScanAdapter? = null
+
     private var listBLE: MutableList<ScanResult>? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -80,7 +80,7 @@ class BleScanActivity : AppCompatActivity() {
                 //youpi, on peut faire du BLE des alpes
                 Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
                 bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
-                initRecyclerDevice(listBLE)
+                initRecyclerDevice()
 
             }
         }
@@ -123,7 +123,6 @@ class BleScanActivity : AppCompatActivity() {
         // you can selectively disable BLE-related features.
         if(!packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, "Cet appareil n'est pas compatible, sorry", Toast.LENGTH_SHORT).show()
-            //finish()
         }
         return packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
     }
@@ -146,24 +145,25 @@ class BleScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecyclerDevice(listBLE : MutableList<ScanResult>?) {
+    private fun initRecyclerDevice() {
+        leDeviceListAdapter = BLEScanAdapter(mutableListOf())
         //leDeviceListAdapter = BLEScanAdapter(mutableListOf(), )
 
-        //pour remettre a 0, remmetre la 1ere ligne, elever les truc dessous faut les binding, et enleverles parametre de cette fonction
-        listBLE?.let {
+        //pour remettre a 0, remmetre la 1ere ligne, elever les truc dessous faut les binding et virer le clickonlisterner de l'adapter
+        /*listBLE?.let {
             val adapterBLE = BLEScanAdapter(it) { it ->
                 val intent = Intent(this, DetailBleActivity::class.java)
                 intent.putExtra("ListDevice", it)
                 startActivity(intent)
-            }
+            }*/
             binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
-            binding.RecyclerBleScan.adapter = adapterBLE
-        }
+            binding.RecyclerBleScan.adapter = leDeviceListAdapter
+       // }
     }
 
     companion object {
         const val REQUEST_ENABLE_BT = 22
         const val REQUEST_PERMISSION_LOCATION = 22
-        private val SCAN_PERIOD: Long = 10000
+        const val SCAN_PERIOD: Long = 10000
     }
 }
