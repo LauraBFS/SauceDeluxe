@@ -2,6 +2,7 @@ package fr.isen.lau.saucedeluxe.categorie
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -33,14 +34,16 @@ class BleScanActivity : AppCompatActivity() {
 
 
         when {
-            !isDeviceHasBLESupport() -> {
+            !isDeviceHasBLESupport() || bluetoothAdapter == null -> {
                 Toast.makeText(this, "Cet appareil n'est pas compatible, sorry", Toast.LENGTH_SHORT).show()
             }
-            bluetoothAdapter == null || !bluetoothAdapter.isEnabled -> {
+             !bluetoothAdapter.isEnabled -> {
                 //je dois activer le bluethooth
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             }
             else -> {
-
+                //youpi, on peut faire du BLE des alpes
             }
         }
 
@@ -52,6 +55,10 @@ class BleScanActivity : AppCompatActivity() {
             togglePlayPauseAction()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun isDeviceHasBLESupport(): Boolean {
@@ -81,6 +88,8 @@ class BleScanActivity : AppCompatActivity() {
         }
     }
 
-
+    companion object {
+        const val REQUEST_ENABLE_BT = 22
+    }
 
 }
