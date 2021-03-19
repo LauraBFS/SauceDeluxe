@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SauceDeluxe"
         android:usesCleartextTraffic="true">
-        <activity android:name=".categorie.DetailActivity"></activity>
+        <activity android:name=".categorie.BleScanActivity"></activity>
+        <activity android:name=".categorie.DetailActivity" />
         <activity android:name=".categorie.CategorieActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>

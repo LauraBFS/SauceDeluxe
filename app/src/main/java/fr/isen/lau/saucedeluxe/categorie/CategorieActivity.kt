@@ -58,15 +58,6 @@ class CategorieActivity : AppCompatActivity() {
         getDataItems(getCategorieTitle(selectedItem));
     }
 
-    /*private fun ItemDisplay(itemData: List<Item>) {
-        binding.recyclerViewCategorie.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewCategorie.adapter = CategorieAdapter(itemData) {
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("items", it)
-            startActivity(intent)
-        }
-    }*/
-
     private fun getDataItems(category: String?) {
 
         val url = "http://test.api.catering.bluecodegames.com/menu"

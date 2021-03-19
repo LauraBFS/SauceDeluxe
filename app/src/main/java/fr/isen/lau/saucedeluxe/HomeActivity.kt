@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import fr.isen.lau.saucedeluxe.categorie.BleScanActivity
 import fr.isen.lau.saucedeluxe.categorie.CategorieActivity
 import fr.isen.lau.saucedeluxe.categorie.ItemType
 import fr.isen.lau.saucedeluxe.databinding.ActivityHomeBinding
@@ -17,7 +18,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setContentView(R.layout.activity_home)
 
         binding.entreesBtn.setOnClickListener {
             startCategorieActivity(ItemType.ENTREES)
@@ -29,6 +29,11 @@ class HomeActivity : AppCompatActivity() {
 
         binding.dessertsBtn.setOnClickListener {
             startCategorieActivity(ItemType.DESSERT)
+        }
+
+        binding.buttonBLEScan.setOnClickListener {
+            val intent = Intent(this, BleScanActivity::class.java)
+            startActivity(intent)
         }
 
     }

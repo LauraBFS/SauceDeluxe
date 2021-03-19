@@ -11,6 +11,7 @@ data class Item(
 ) : Serializable {
 
     fun getAffichagePrice() = prices[0].price + "€"
+
     fun getFirstPicture() = if (images.isNotEmpty() && images[0].isNotEmpty()) {
         images[0]
     } else {
