@@ -48,7 +48,6 @@
         android:src="@drawable/ilustracao_de_maos_segurando_comida_lixo_53876_37283"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/entreesBtn"
         app:layout_constraintVertical_bias="1.0" />
@@ -65,16 +64,16 @@
 
     <Button
         android:id="@+id/buttonBLEScan"
-        android:layout_width="46dp"
-        android:layout_height="33dp"
+        android:layout_width="50dp"
+        android:layout_height="37dp"
         android:backgroundTint="#89C1D3"
         android:text="@string/BLEScan"
         android:textSize="7sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.864" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

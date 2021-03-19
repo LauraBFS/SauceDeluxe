@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/BleScanTitle"
-        android:layout_width="242dp"
+        android:layout_width="290dp"
         android:layout_height="29dp"
         android:layout_marginTop="96dp"
         android:text="@string/ble_scan_play_title"
@@ -44,11 +44,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerBleScan"
-        android:layout_width="407dp"
-        android:layout_height="508dp"
+        android:layout_width="408dp"
+        android:layout_height="481dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarBLE" />
+        app:layout_constraintTop_toTopOf="@+id/progressBarBLE" />
 
     <View
         android:id="@+id/JolieBarBLE"

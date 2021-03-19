@@ -16,4 +16,5 @@
 
     <string name="ble_scan_play_title">Lancer le scan Blé des champs</string>
     <string name="ble_scan_pause_title">Recherche des fleurs en cours...</string>
+    <string name="NumberID">ID</string>
 </resources>

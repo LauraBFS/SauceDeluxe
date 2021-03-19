@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cellLayout"
+    android:id="@+id/CellLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/potatoes" />
 
     <TextView
-        android:id="@+id/categorieName"
+        android:id="@+id/TitleDish"
         android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"

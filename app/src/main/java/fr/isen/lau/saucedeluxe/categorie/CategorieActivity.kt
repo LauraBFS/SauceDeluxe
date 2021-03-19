@@ -1,27 +1,21 @@
 package fr.isen.lau.saucedeluxe.categorie
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 
 import fr.isen.lau.saucedeluxe.HomeActivity
 import fr.isen.lau.saucedeluxe.databinding.ActivityCategorieBinding
 
 import org.json.JSONObject
 import com.google.gson.GsonBuilder
-import fr.isen.lau.saucedeluxe.HomeActivity.Companion.CATEGORY_NAME
-import fr.isen.lau.saucedeluxe.model.Category
 import fr.isen.lau.saucedeluxe.model.DataResult
 import fr.isen.lau.saucedeluxe.model.Item
 

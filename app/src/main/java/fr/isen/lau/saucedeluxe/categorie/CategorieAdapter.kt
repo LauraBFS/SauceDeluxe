@@ -9,8 +9,6 @@ import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.model.Item
 import com.squareup.picasso.Picasso
 import fr.isen.lau.saucedeluxe.databinding.CategoriePlacementBinding
-import fr.isen.lau.saucedeluxe.model.Category
-import fr.isen.lau.saucedeluxe.model.DataResult
 
 class CategorieAdapter(private val list: List<Item>,
                        private val clickListener: (Item) -> Unit) : RecyclerView.Adapter<CategorieAdapter.ViewHolder>() {
@@ -42,9 +40,9 @@ class CategorieAdapter(private val list: List<Item>,
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(binding: CategoriePlacementBinding) : RecyclerView.ViewHolder(binding.root) {
-        val textTitle: TextView = itemView.findViewById(R.id.categorieName)
+        val textTitle: TextView = itemView.findViewById(R.id.TitleDish)
         val textPrice: TextView = itemView.findViewById(R.id.categoriePrice)
         val Picture = binding.catagoriesImage
-        val layout = itemView.findViewById<View>(R.id.cellLayout)
+        val layout = itemView.findViewById<View>(R.id.CellLayout)
     }
 }

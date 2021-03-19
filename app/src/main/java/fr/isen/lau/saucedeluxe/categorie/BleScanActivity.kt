@@ -9,17 +9,31 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.ActivityBleScanBinding
-
+import android.Manifest
+import android.bluetooth.le.BluetoothLeScanner
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanRecord
+import android.bluetooth.le.ScanResult
+import android.os.Handler
+import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 
 class BleScanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBleScanBinding
     private var isScanning = false
-    private val bluetoothAdapter: BluetoothAdapter? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private var bluetoothLeScanner: BluetoothLeScanner? = null
+    private var scanning = false
+    private val handler = Handler()
 
+    // Stops scanning after 10 seconds.
+    private val SCAN_PERIOD: Long = 10000
+    private lateinit var leDeviceListAdapter: BLEScanAdapter
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,23 +43,10 @@ class BleScanActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Initialisation du Bluetooth adapter.
-        val bluetoothManager = getSystemService(BluetoothManager::class.java)
-        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager?.adapter
+        bluetoothAdapter = getSystemService(BluetoothManager::class.java)?.adapter
 
-
-        when {
-            !isDeviceHasBLESupport() || bluetoothAdapter == null -> {
-                Toast.makeText(this, "Cet appareil n'est pas compatible, sorry", Toast.LENGTH_SHORT).show()
-            }
-             !bluetoothAdapter.isEnabled -> {
-                //je dois activer le bluethooth
-                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-            }
-            else -> {
-                //youpi, on peut faire du BLE des alpes
-            }
-        }
+        startBLEIfPossible()
+        isDeviceHasBLESupport()
 
         binding.ImageBLEStartPause.setOnClickListener {
             togglePlayPauseAction()
@@ -57,8 +58,62 @@ class BleScanActivity : AppCompatActivity() {
 
     }
 
+    private fun startBLEIfPossible() {
+
+        when {
+            !isDeviceHasBLESupport() || bluetoothAdapter == null -> {
+                Toast.makeText(this, "Cet appareil n'est pas compatible, sorry", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            !(bluetoothAdapter?.isEnabled ?: false) -> {
+                //je dois activer le bluethooth
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            }
+            ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED -> {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+            }
+            else -> {
+                //youpi, on peut faire du BLE des alpes
+                Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
+                bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
+                initRecyclerDevice()
+            }
+        }
+    }
+
+    private fun scanLeDevice() {
+        bluetoothLeScanner?.let { scanner ->
+            if (!scanning) { // Stops scanning after a pre-defined scan period.
+                handler.postDelayed({
+                    scanning = false
+                    scanner.stopScan(leScanCallback)
+                }, SCAN_PERIOD)
+                scanning = true
+                scanner.startScan(leScanCallback)
+            } else {
+                scanning = false
+                scanner.stopScan(leScanCallback)
+            }
+        }
+    }
+
+    private val leScanCallback: ScanCallback = object : ScanCallback() {
+
+        override fun onScanResult(callbackType: Int, result: ScanResult) {
+            super.onScanResult(callbackType, result)
+
+            leDeviceListAdapter.addDevice(result)
+            leDeviceListAdapter.notifyDataSetChanged()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
+            startBLEIfPossible()
+        }
     }
 
     private fun isDeviceHasBLESupport(): Boolean {
@@ -79,6 +134,7 @@ class BleScanActivity : AppCompatActivity() {
             binding.ImageBLEStartPause.setImageResource(R.drawable.a6810)
             binding.progressBarBLE.isVisible = true
             binding.JolieBarBLE.isVisible = false
+            scanLeDevice()
         }
         else {
             binding.BleScanTitle.text = getString(R.string.ble_scan_play_title)
@@ -88,8 +144,15 @@ class BleScanActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val REQUEST_ENABLE_BT = 22
+    private fun initRecyclerDevice() {
+        leDeviceListAdapter = BLEScanAdapter(mutableListOf())
+        binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
+        binding.RecyclerBleScan.adapter = leDeviceListAdapter
     }
 
+
+    companion object {
+        const val REQUEST_ENABLE_BT = 22
+        const val REQUEST_PERMISSION_LOCATION = 22
+    }
 }
