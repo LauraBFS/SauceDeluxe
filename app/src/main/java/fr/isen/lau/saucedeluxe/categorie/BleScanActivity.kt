@@ -16,12 +16,10 @@ import fr.isen.lau.saucedeluxe.databinding.ActivityBleScanBinding
 import android.Manifest
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanRecord
 import android.bluetooth.le.ScanResult
 import android.os.Handler
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import fr.isen.lau.saucedeluxe.model.Item
 
 class BleScanActivity : AppCompatActivity() {
 
@@ -34,8 +32,7 @@ class BleScanActivity : AppCompatActivity() {
 
     // Stops scanning after 10 seconds.
     private var leDeviceListAdapter: BLEScanAdapter? = null
-
-    private var listBLE: MutableList<ScanResult>? = null
+    //private var listBLE: MutableList<ScanResult>? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +77,10 @@ class BleScanActivity : AppCompatActivity() {
                 //youpi, on peut faire du BLE des alpes
                 Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
                 bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
+
+                //listBLE?.let {
                 initRecyclerDevice()
+                //}
 
             }
         }
@@ -132,32 +132,31 @@ class BleScanActivity : AppCompatActivity() {
 
         if (isScanning){
             binding.BleScanTitle.text = getString(R.string.ble_scan_pause_title)
-            binding.ImageBLEStartPause.setImageResource(R.drawable.a6810)
+            binding.ImageBLEStartPause.setImageResource(R.drawable.pause)
             binding.progressBarBLE.isVisible = true
             binding.JolieBarBLE.isVisible = false
             scanLeDevice()
         }
         else {
             binding.BleScanTitle.text = getString(R.string.ble_scan_play_title)
-            binding.ImageBLEStartPause.setImageResource(R.drawable.a6810)
+            binding.ImageBLEStartPause.setImageResource(R.drawable.play)
             binding.progressBarBLE.isVisible = false
             binding.JolieBarBLE.isVisible = true
         }
     }
 
-    private fun initRecyclerDevice() {
+    private fun initRecyclerDevice(/*listBLE: MutableList<ScanResult>?*/) {
         leDeviceListAdapter = BLEScanAdapter(mutableListOf())
-        //leDeviceListAdapter = BLEScanAdapter(mutableListOf(), )
+        //leDeviceListAdapter = BLEScanAdapter(mutableListOf(), mettre le onclick mais comment ??
 
-        //pour remettre a 0, remmetre la 1ere ligne, elever les truc dessous faut les binding et virer le clickonlisterner de l'adapter
         /*listBLE?.let {
-            val adapterBLE = BLEScanAdapter(it) { it ->
+            val adapterBLE = BLEScanAdapter(it) { listBLEthis ->
                 val intent = Intent(this, DetailBleActivity::class.java)
-                intent.putExtra("ListDevice", it)
+                intent.putExtra("listDevice", listBLEthis)
                 startActivity(intent)
             }*/
             binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
-            binding.RecyclerBleScan.adapter = leDeviceListAdapter
+            binding.RecyclerBleScan.adapter = leDeviceListAdapter/*adapterBLE*/
        // }
     }
 
