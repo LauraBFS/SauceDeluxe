@@ -32,7 +32,6 @@ class BleScanActivity : AppCompatActivity() {
 
     // Stops scanning after 10 seconds.
     private var leDeviceListAdapter: BLEScanAdapter? = null
-    //private var listBLE: MutableList<ScanResult>? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,9 +77,8 @@ class BleScanActivity : AppCompatActivity() {
                 Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
                 bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
 
-                //listBLE?.let {
                 initRecyclerDevice()
-                //}
+
 
             }
         }
@@ -145,19 +143,17 @@ class BleScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecyclerDevice(/*listBLE: MutableList<ScanResult>?*/) {
-        leDeviceListAdapter = BLEScanAdapter(mutableListOf())
-        //leDeviceListAdapter = BLEScanAdapter(mutableListOf(), mettre le onclick mais comment ??
+    private fun initRecyclerDevice() {
+        leDeviceListAdapter = BLEScanAdapter(mutableListOf()) {
+            //Log.i( "valeur", "$it")
 
-        /*listBLE?.let {
-            val adapterBLE = BLEScanAdapter(it) { listBLEthis ->
-                val intent = Intent(this, DetailBleActivity::class.java)
-                intent.putExtra("listDevice", listBLEthis)
-                startActivity(intent)
-            }*/
+            val intent = Intent(this, DetailBleActivity::class.java)
+            intent.putExtra("listDevice", it)
+            startActivity(intent)
+        }
             binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
-            binding.RecyclerBleScan.adapter = leDeviceListAdapter/*adapterBLE*/
-       // }
+            binding.RecyclerBleScan.adapter = leDeviceListAdapter
+       //}
     }
 
     companion object {

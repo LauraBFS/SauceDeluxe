@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.CellBleDeviceBinding
 
-class BLEScanAdapter(private val listBLE: MutableList<ScanResult>/*,
-                     private val clickListener: (ScanResult) -> Unit*/) : RecyclerView.Adapter<BLEScanAdapter.ViewHolder>(){
+class BLEScanAdapter(private val listBLE: MutableList<ScanResult>,
+                     private val clickListener: (ScanResult) -> Unit) : RecyclerView.Adapter<BLEScanAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CellBleDeviceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +23,7 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>/*,
         holder.nameDevice.text = listBLE[position].scanRecord?.deviceName.toString()
 
         holder.layoutBLE.setOnClickListener {
-            //clickListener.invoke(listBLE[position])
+            clickListener.invoke(listBLE[position])
         }
     }
 

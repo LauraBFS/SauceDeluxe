@@ -12,7 +12,7 @@
         android:layout_height="29dp"
         android:layout_marginTop="104dp"
         android:text="@string/ble_scan_play_title"
-        android:textSize="16sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toStartOf="@+id/ImageBLEStartPause"
         app:layout_constraintHorizontal_bias="0.744"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +44,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerBleScan"
-        android:layout_width="414dp"
-        android:layout_height="464dp"
+        android:layout_width="409dp"
+        android:layout_height="518dp"
         android:layout_marginTop="27dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
