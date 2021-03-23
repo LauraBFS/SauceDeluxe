@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.ActivityBleScanBinding
 import android.Manifest
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
@@ -76,10 +77,7 @@ class BleScanActivity : AppCompatActivity() {
                 //youpi, on peut faire du BLE des alpes
                 Log.d("ScanDevices", "onRequestPermissionsResult(not PERMISSION_GRANTED)")
                 bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
-
                 initRecyclerDevice()
-
-
             }
         }
     }
@@ -144,16 +142,16 @@ class BleScanActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerDevice() {
-        leDeviceListAdapter = BLEScanAdapter(mutableListOf()) {
-            //Log.i( "valeur", "$it")
 
+
+        binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
+
+        leDeviceListAdapter = BLEScanAdapter(mutableListOf()) {
             val intent = Intent(this, DetailBleActivity::class.java)
-            intent.putExtra("listDevice", it)
+            intent.putExtra(BluetoothDevice.EXTRA_DEVICE, it.device)
             startActivity(intent)
         }
-            binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
-            binding.RecyclerBleScan.adapter = leDeviceListAdapter
-       //}
+        binding.RecyclerBleScan.adapter = leDeviceListAdapter
     }
 
     companion object {
