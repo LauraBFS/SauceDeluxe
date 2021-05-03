@@ -1,25 +1,17 @@
 package fr.isen.lau.saucedeluxe.categorie
 
 import android.bluetooth.*
-import android.bluetooth.le.ScanRecord
-import android.bluetooth.le.ScanResult
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import fr.isen.lau.saucedeluxe.R
-import fr.isen.lau.saucedeluxe.databinding.ActivityDetailBinding
 import fr.isen.lau.saucedeluxe.databinding.ActivityDetailBleBinding
-import fr.isen.lau.saucedeluxe.model.Item
-import java.io.Serializable
 
 class DetailBleActivity : AppCompatActivity() {
 
     var statut: String = "statut :  "
     var bluetoothGatt: BluetoothGatt? = null
-    private var TAG: String = "My Activity"
 
     private lateinit var binding: ActivityDetailBleBinding
 
@@ -110,7 +102,7 @@ class DetailBleActivity : AppCompatActivity() {
                                     it.uuid.toString(),
                                     it.characteristics
                             )
-                        }?.toMutableList() ?: arrayListOf()
+                        }?.toMutableList() ?: arrayListOf(), this@DetailBleActivity
                 )
                 binding.recyclerBLEDetail.layoutManager = LinearLayoutManager(this@DetailBleActivity)
             }

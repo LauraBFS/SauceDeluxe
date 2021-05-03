@@ -102,6 +102,7 @@ class BleScanActivity : AppCompatActivity() {
 
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             super.onScanResult(callbackType, result)
+            Log.d("test", "test du scanner")
             leDeviceListAdapter?.addDevice(result)
             leDeviceListAdapter?.notifyDataSetChanged()
         }

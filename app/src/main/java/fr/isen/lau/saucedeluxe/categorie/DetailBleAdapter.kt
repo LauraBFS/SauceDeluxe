@@ -1,5 +1,6 @@
 package fr.isen.lau.saucedeluxe.categorie
 
+import android.app.AlertDialog
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
@@ -17,12 +18,14 @@ import fr.isen.lau.saucedeluxe.R
 class DetailBleAdapter(
         private val gatt: BluetoothGatt?,
         private val serviceList: MutableList<BLEService>,
+        private val context: Context
 ) :
         ExpandableRecyclerViewAdapter<DetailBleAdapter.ServiceViewHolder, DetailBleAdapter.CharacteristicViewHolder>(
                 serviceList
         ) {
     private var enabled : Boolean = false
     class ServiceViewHolder(itemView: View) : GroupViewHolder(itemView) {
+
         val serviceName: TextView = itemView.findViewById(R.id.nomParent)
         val serviceUUID: TextView = itemView.findViewById(R.id.uuidParent)
     }
@@ -85,12 +88,14 @@ class DetailBleAdapter(
 
         holder.characteristicProperties.text = "proprietes : ${proprieties(characteristic.properties)}"
 
-        /* holder.characteristicWriteAction.setOnClickListener {
+        holder.characteristicWriteAction.setOnClickListener {
             val alertDialog = AlertDialog.Builder(context)
-            val editView = View.inflate(context, R.layout.popup_ecrire, null)
+            val editView = View.inflate(context, R.layout.popupecriture, null)
             alertDialog.setView(editView)
             alertDialog.setPositiveButton("Valider") { _, _ ->
-                val texte = editView.popup.text.toString().toByteArray()
+                //val texte = editView.popup.text.toString().toByteArray()
+                val popup: TextView = editView.findViewById(R.id.popup)
+                val texte = popup.text.toString().toByteArray()
                 characteristic.setValue(texte)
                 val result1 = gatt?.writeCharacteristic(characteristic)
                 Log.d("erreur : ", result1.toString())
@@ -100,7 +105,7 @@ class DetailBleAdapter(
             alertDialog.setNegativeButton("Annuler") { alertDialog, _ -> alertDialog.cancel() }
             alertDialog.create()
             alertDialog.show()
-        }*/
+        }
 
         holder.characteristicReadAction.setOnClickListener {
             val result = gatt?.readCharacteristic(characteristic)
