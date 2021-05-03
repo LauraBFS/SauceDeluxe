@@ -70,7 +70,6 @@ class DetailActivity : AppCompatActivity() {
                 calculTotal(quantity, dataItem)
             }
         }
-
     }
 
     private fun calculTotal(quantity: Int, itemPricedata: Item) {

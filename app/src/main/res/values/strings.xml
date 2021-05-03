@@ -18,4 +18,17 @@
     <string name="ble_scan_pause_title">Recherche des fleurs en cours...</string>
     <string name="NumberID">ID</string>
     <string name="statusBle">"Status : connecté "</string>
+    <string name="questionTextview">Question</string>
+    <string name="answerTextview">Answer</string>
+    <string name="titleOfBleInfo">"INFO BLE "</string>
+    <string name="longNombre">Très long nombre jsp c\'est quoi encore</string>
+    <string name="caracteristique_specifique">Caractéristique Spécifique</string>
+    <string name="UUID">UUID</string>
+    <string name="LECTURE">"LECTURE "</string>
+    <string name="ECRITURE" />
+    <string name="ECRITUREb">ECRITURE</string>
+    <string name="NOTIFIER">NOTIFIER</string>
+    <string name="Propriétés">Propriétés :</string>
+    <string name="Valeur">"Valeur : "</string>
+    <string name="nomParent">nomParent</string>
 </resources>

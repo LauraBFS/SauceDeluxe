@@ -1,5 +1,6 @@
 package fr.isen.lau.saucedeluxe.categorie
 
+import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.le.ScanResult
 import android.view.LayoutInflater
 import android.view.View
@@ -40,5 +41,14 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>,
         if (!listBLE.contains(AppareilData)) {
             listBLE.add(AppareilData)
         }
+/*
+        val index = listBLE.indexOfFirst {
+            it.device.address == AppareilData.device.address
+        }
+        if (index != -1) {
+            listBLE[index] = AppareilData
+        } else {
+            listBLE.add(AppareilData)
+        }*/
     }
 }

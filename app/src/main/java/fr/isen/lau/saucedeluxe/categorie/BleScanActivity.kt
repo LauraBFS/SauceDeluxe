@@ -142,13 +142,11 @@ class BleScanActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerDevice() {
-
-
         binding.RecyclerBleScan.layoutManager = LinearLayoutManager(this)
 
         leDeviceListAdapter = BLEScanAdapter(mutableListOf()) {
             val intent = Intent(this, DetailBleActivity::class.java)
-            intent.putExtra(BluetoothDevice.EXTRA_DEVICE, it.device)
+            intent.putExtra(/*BluetoothDevice.EXTRA_DEVICE*/"ble_device", it.device)
             startActivity(intent)
         }
         binding.RecyclerBleScan.adapter = leDeviceListAdapter
