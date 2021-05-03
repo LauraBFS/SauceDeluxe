@@ -23,8 +23,11 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import android.view.Menu
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class BleScanActivity : AppCompatActivity() {
 
@@ -35,7 +38,6 @@ class BleScanActivity : AppCompatActivity() {
     private var scanning = false
     private val handler = Handler()
 
-    // Stops scanning after 10 seconds.
     private var leDeviceListAdapter: BLEScanAdapter? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -107,9 +109,9 @@ class BleScanActivity : AppCompatActivity() {
             super.onScanResult(callbackType, result)
             Log.d("test", "test du scanner")
 
-            if (binding.searchViewSearchBar.queryHint == result.device.name) {
+            if (binding.searchViewSearchBar.query == result.device.name) {
                 leDeviceListAdapter?.addDevice(result)
-                leDeviceListAdapter?.notifyDataSetChanged()
+                //leDeviceListAdapter?.notifyDataSetChanged()
             }
             else {
                 leDeviceListAdapter?.addDevice(result)
