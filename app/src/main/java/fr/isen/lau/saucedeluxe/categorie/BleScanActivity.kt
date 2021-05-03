@@ -14,12 +14,15 @@ import androidx.core.view.isVisible
 import fr.isen.lau.saucedeluxe.R
 import fr.isen.lau.saucedeluxe.databinding.ActivityBleScanBinding
 import android.Manifest
+import android.app.SearchManager
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
+import android.content.Context
 import android.os.Handler
 import android.util.Log
+import android.view.Menu
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -55,20 +58,6 @@ class BleScanActivity : AppCompatActivity() {
         binding.BleScanTitle.setOnClickListener() {
             togglePlayPauseAction()
         }
-
-       /* val search = menu.findItem(R.id.appSearchBar)
-        val searchView = search.actionView as SearchView
-        searchView.queryHint = "Search"
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filter.filter(newText)
-                return true
-            }
-        })*/
-
     }
 
     private fun startBLEIfPossible() {
@@ -117,8 +106,15 @@ class BleScanActivity : AppCompatActivity() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             super.onScanResult(callbackType, result)
             Log.d("test", "test du scanner")
-            leDeviceListAdapter?.addDevice(result)
-            leDeviceListAdapter?.notifyDataSetChanged()
+
+            if (binding.searchViewSearchBar.queryHint == result.device.name) {
+                leDeviceListAdapter?.addDevice(result)
+                leDeviceListAdapter?.notifyDataSetChanged()
+            }
+            else {
+                leDeviceListAdapter?.addDevice(result)
+                leDeviceListAdapter?.notifyDataSetChanged()
+            }
         }
     }
 
