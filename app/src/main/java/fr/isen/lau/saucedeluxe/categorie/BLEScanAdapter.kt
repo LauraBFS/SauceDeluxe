@@ -20,8 +20,8 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.adressBLE.text = listBLE[position].device.toString()
-        holder.numberID.text = listBLE[position].scanRecord?.advertiseFlags.toString()
-        holder.nameDevice.text = listBLE[position].scanRecord?.deviceName.toString()
+        holder.numberID.text = listBLE[position].rssi.toString()
+        holder.nameDevice.text = listBLE[position].device.name?: "No device name"
 
         holder.layoutBLE.setOnClickListener {
             clickListener.invoke(listBLE[position])
@@ -38,6 +38,7 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>,
     }
 
     fun addDevice(AppareilData: ScanResult) {
+
         if (!listBLE.contains(AppareilData)) {
             listBLE.add(AppareilData)
         }

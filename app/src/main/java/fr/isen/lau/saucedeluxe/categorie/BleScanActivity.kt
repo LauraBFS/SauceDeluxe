@@ -20,6 +20,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.os.Handler
 import android.util.Log
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 
 class BleScanActivity : AppCompatActivity() {
@@ -54,6 +55,19 @@ class BleScanActivity : AppCompatActivity() {
         binding.BleScanTitle.setOnClickListener() {
             togglePlayPauseAction()
         }
+
+       /* val search = menu.findItem(R.id.appSearchBar)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = "Search"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })*/
 
     }
 
@@ -152,6 +166,8 @@ class BleScanActivity : AppCompatActivity() {
         }
         binding.RecyclerBleScan.adapter = leDeviceListAdapter
     }
+
+
 
     companion object {
         const val REQUEST_ENABLE_BT = 22

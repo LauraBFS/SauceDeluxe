@@ -9,22 +9,21 @@
         <TextView
             android:id="@+id/adresseDevice"
             android:layout_width="187dp"
-            android:layout_height="19dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="18dp"
             android:fontFamily="@font/didact_gothic"
             android:text="TextView"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.97" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/NameDevice"
             android:layout_width="149dp"
-            android:layout_height="20dp"
+            android:layout_height="23dp"
             android:layout_marginBottom="28dp"
             android:text="TextView"
             android:textSize="18sp"
@@ -36,11 +35,11 @@
 
         <Button
             android:id="@+id/buttonNumberId"
-            android:layout_width="49dp"
-            android:layout_height="58dp"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
             android:backgroundTint="#09CEE6"
             android:text="@string/NumberID"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@+id/adresseDevice"
             app:layout_constraintHorizontal_bias="0.082"
             app:layout_constraintStart_toStartOf="parent"

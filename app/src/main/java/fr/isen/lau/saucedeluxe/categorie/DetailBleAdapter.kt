@@ -39,7 +39,6 @@ class DetailBleAdapter(
         val characteristicReadAction: Button = itemView.findViewById(R.id.buttonLecture)
         val characteristicWriteAction: Button = itemView.findViewById(R.id.buttonEcriture)
         val characteristicNotifyAction: Button = itemView.findViewById(R.id.buttonNotify)
-
     }
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ServiceViewHolder =
