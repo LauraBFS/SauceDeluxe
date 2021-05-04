@@ -8,6 +8,7 @@ import android.content.Context
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
@@ -28,6 +29,12 @@ class DetailBleAdapter(
 
         val serviceName: TextView = itemView.findViewById(R.id.nomParent)
         val serviceUUID: TextView = itemView.findViewById(R.id.uuidParent)
+
+        val arrow: ImageView = itemView.findViewById(R.id.arrrowButton)
+        override fun expand() {
+            super.expand()
+            arrow.animate().rotation(-180f).setDuration(400L).start()
+        }
     }
 
     class CharacteristicViewHolder(itemView: View) : ChildViewHolder(itemView) {
@@ -75,29 +82,32 @@ class DetailBleAdapter(
         holder.characteristicReadAction.visibility = View.GONE
         holder.characteristicNotifyAction.visibility = View.GONE
         holder.characteristicWriteAction.visibility = View.GONE
-        if (proprieties(characteristic.properties).contains("Lire")) {
+        if (proprieties(characteristic.properties).contains("Lecture")) {
             holder.characteristicReadAction.visibility = View.VISIBLE
         }
-        if (proprieties(characteristic.properties).contains("Ecrire")) {
+        if (proprieties(characteristic.properties).contains("Ecriture")) {
             holder.characteristicWriteAction.visibility = View.VISIBLE
         }
         if (proprieties(characteristic.properties).contains("Notifier")) {
             holder.characteristicNotifyAction.visibility = View.VISIBLE
         }
 
-        holder.characteristicProperties.text = "proprietes : ${proprieties(characteristic.properties)}"
+        holder.characteristicProperties.text = "propriétés : ${proprieties(characteristic.properties)}"
 
         holder.characteristicWriteAction.setOnClickListener {
             val alertDialog = AlertDialog.Builder(context)
             val editView = View.inflate(context, R.layout.popupecriture, null)
             alertDialog.setView(editView)
             alertDialog.setPositiveButton("Valider") { _, _ ->
-                //val texte = editView.popup.text.toString().toByteArray()
+
                 val popup: TextView = editView.findViewById(R.id.popup)
                 val texte = popup.text.toString().toByteArray()
+
                 characteristic.setValue(texte)
+
                 val result1 = gatt?.writeCharacteristic(characteristic)
                 Log.d("erreur : ", result1.toString())
+
                 val result = gatt?.readCharacteristic(characteristic)
                 Log.d("erreur : ", result.toString())
             }
@@ -180,10 +190,10 @@ class DetailBleAdapter(
     private fun proprieties(property: Int): StringBuilder {
         val sb = StringBuilder()
         if (property and BluetoothGattCharacteristic.PROPERTY_WRITE != 0) {
-            sb.append("Ecrire")
+            sb.append("Ecriture")
         }
         if (property and BluetoothGattCharacteristic.PROPERTY_READ != 0) {
-            sb.append(" Lire")
+            sb.append(" Lecture")
         }
         if (property and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0) {
             sb.append(" Notifier")

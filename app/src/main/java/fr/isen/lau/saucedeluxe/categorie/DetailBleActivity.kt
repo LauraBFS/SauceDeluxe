@@ -10,7 +10,7 @@ import fr.isen.lau.saucedeluxe.databinding.ActivityDetailBleBinding
 
 class DetailBleActivity : AppCompatActivity() {
 
-    var statut: String = "statut :  "
+    var statut: String = "status :  "
     var bluetoothGatt: BluetoothGatt? = null
 
     private lateinit var binding: ActivityDetailBleBinding
@@ -47,15 +47,15 @@ class DetailBleActivity : AppCompatActivity() {
             when (newState) {
                 BluetoothProfile.STATE_CONNECTED -> {
                     runOnUiThread {
-                        statut += STATE_CONNECTED
-                        binding.StatusBLE.text = statut
+                        statut = STATE_CONNECTED
+                        binding.StatusBLE.text = "Status : " + statut
                     }
                     bluetoothGatt?.discoverServices()
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     runOnUiThread {
-                        statut += STATE_DISCONNECTED
-                        binding.StatusBLE.text = statut
+                        statut = STATE_DISCONNECTED
+                        binding.StatusBLE.text = "Status : " + statut
                     }
                 }
             }
@@ -98,10 +98,7 @@ class DetailBleActivity : AppCompatActivity() {
                 binding.recyclerBLEDetail.adapter = DetailBleAdapter(
                         gatt,
                         gatt?.services?.map {
-                            BLEService(
-                                    it.uuid.toString(),
-                                    it.characteristics
-                            )
+                            BLEService(it.uuid.toString(), it.characteristics)
                         }?.toMutableList() ?: arrayListOf(), this@DetailBleActivity
                 )
                 binding.recyclerBLEDetail.layoutManager = LinearLayoutManager(this@DetailBleActivity)

@@ -109,9 +109,10 @@ class BleScanActivity : AppCompatActivity() {
             super.onScanResult(callbackType, result)
             Log.d("test", "test du scanner")
 
-            if (binding.searchViewSearchBar.query == result.device.name) {
-                leDeviceListAdapter?.addDevice(result)
-                //leDeviceListAdapter?.notifyDataSetChanged()
+            if (result.device.name == null) {
+               // leDeviceListAdapter?.addDevice(result)
+                // leDeviceListAdapter?.notifyDataSetChanged()
+                return
             }
             else {
                 leDeviceListAdapter?.addDevice(result)
