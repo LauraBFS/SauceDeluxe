@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,11 +20,14 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.os.Handler
+import android.text.BoringLayout.make
 import android.util.Log
 import android.view.Menu
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -37,7 +39,6 @@ class BleScanActivity : AppCompatActivity() {
     private var bluetoothLeScanner: BluetoothLeScanner? = null
     private var scanning = false
     private val handler = Handler()
-
     private var leDeviceListAdapter: BLEScanAdapter? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -60,6 +61,25 @@ class BleScanActivity : AppCompatActivity() {
         binding.BleScanTitle.setOnClickListener() {
             togglePlayPauseAction()
         }
+
+
+        binding.searchBar.isActivated = true;
+        binding.searchBar.queryHint = "Recherche ta graine";
+        binding.searchBar.onActionViewExpanded();
+        binding.searchBar.isIconified = false;
+        binding.searchBar.clearFocus();
+
+        binding.searchBar.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query : String) : Boolean {
+                //Toast.makeText(this, query, Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            override fun onQueryTextChange(newText : String) : Boolean {
+                //Toast.makeText(this, query, Toast.LENGTH_SHORT).show()
+                return false
+            }
+        })
     }
 
     private fun startBLEIfPossible() {
@@ -109,7 +129,7 @@ class BleScanActivity : AppCompatActivity() {
             super.onScanResult(callbackType, result)
             Log.d("test", "test du scanner")
 
-            if (result.device.name == null) {
+            if(result.device.name == null) {
                // leDeviceListAdapter?.addDevice(result)
                 // leDeviceListAdapter?.notifyDataSetChanged()
                 return
@@ -165,7 +185,6 @@ class BleScanActivity : AppCompatActivity() {
         }
         binding.RecyclerBleScan.adapter = leDeviceListAdapter
     }
-
 
 
     companion object {

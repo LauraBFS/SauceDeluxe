@@ -2,6 +2,7 @@ package fr.isen.lau.saucedeluxe.categorie
 
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.le.ScanResult
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,8 +39,16 @@ class BLEScanAdapter(private val listBLE: MutableList<ScanResult>,
     }
 
     fun addDevice(AppareilData: ScanResult) {
+        var deviceFound : Boolean = false
 
-        if (!listBLE.contains(AppareilData)) {
+        listBLE.forEachIndexed { idx, sr ->
+            if(sr.device.address == AppareilData.device.address){
+                listBLE[idx] = AppareilData
+                deviceFound = true
+            }
+        }
+
+        if (!deviceFound){
             listBLE.add(AppareilData)
         }
 /*
